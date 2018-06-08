@@ -24,7 +24,8 @@ class SecurityController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             $pass = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($pass);
-            var_dump($user);die();
+            $roles=["ROLE_USER"];
+            $user->setRoles($roles);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

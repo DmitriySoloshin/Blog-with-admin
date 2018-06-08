@@ -2,10 +2,10 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <style>
-
+        .navbar {
+            #margin: -50px;
+        }
         .panel-heading {
             padding: 5px 15px;
         }
@@ -35,17 +35,17 @@
             </div>
         </div>
     {% endif %}
-    <!--
-    <form action="{{ path('login') }}" method="POST">
+
+    <!--<form action="{{ path('login') }}" method="POST">
     <label for="username">Username</label>
     <input type="text" id="username" name="_username" value="{{ last_username }}"><br>
     <label for="pass">Password</label>
     <input type="password" id="pass" name="_password"><br>
     <input type="submit" value="login">
-    </form>
-    -->
+    </form> -->
 
-    <div class="container" style="margin-top:40px">
+
+        <div class="container" style="margin-top:40px">
         <div class="row">
             <div class="col-sm-6 col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
@@ -70,7 +70,7 @@
 												<span class="input-group-addon">
 													<i class="glyphicon glyphicon-lock"></i>
 												</span>
-                                                <input class="form-control" placeholder="Password" name="_password" type="password" value="">
+                                                <input class="form-control" placeholder="Password" name="_password" type="password">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -88,4 +88,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}

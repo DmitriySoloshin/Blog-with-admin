@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        {% for message in app.flashes('created') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('edit') %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('delete') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+    {% for post in posts %}
+        {% if post.active == true %}
+    <main role="main" class="container">
+        <div class="jumbotron">
+            {% if app.user.username == post.user.username %}
+            <a href="{{ path('edit_post', {'id':post.id}) }}">edit post</a>
+            <a href="{{ path('delete_post', {'id':post.id}) }}">delete post</a>
+                {% endif %}
+            <table>
+                <tr>
+                    <td><b>{{ post.title }}</b></td>
+                </tr>
+                <tr>
+                    <td>Created at: {{ post.createdAt }}</td>
+                </tr>
+                <tr>
+                    <td>Author: {{ post.user.username }}</td>
+                </tr>
+            </table>
+            <p class="lead">{{ post.text }}</p>
+            <h3>Количество комментариев {{ post.comments|length }}</h3>
+            {% if post.comments|length == 0  %}
+                <a href="{{ path('comment', {'id': post.id}) }}">Leave first comment</a>
+            {% else %}
+                {% for comment in post.comments %}
+                    {% if comment.active %}
+                <div class="container border bg-warning">
+                        <p>#{{ loop.index }}/author: {{ comment.user.username }}.text:{{ comment.text }}</p>
+                    {%  if is_granted('IS_AUTHENTICATED_FULLY')%}
+                    {% if app.user.username == comment.user.username %}
+
+                            {% if comment.user.username == app.user.username %}
+                                <a href="{{ path('edit_comment', {'id': comment.id, 'post_id' : post.id}) }}">Edit comment</a>
+                                <a href="{{ path('delete_comment', {'id': comment.id, 'post_id' : post.id}) }}">Delete comment</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                </div>
+                        <br>
+                        {% endif %}
+
+                    {% endfor %}
+                {%  if is_granted('IS_AUTHENTICATED_FULLY')%}
+                <a href="{{ path('comment', {'id': post.id}) }}">add new comment</a>
+                    {% else %}
+                    <p>Sign up to add comment <a href="{{ path('registration') }}">Registration </a>or Login <a href="{{ path('login') }}">login</a></p>
+                    {% endif %}
+                {% endif %}
+
+        </div>
+    </main>
+            {% endif %}
+    {% endfor %}
+{% endblock %}
